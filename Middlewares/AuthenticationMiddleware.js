@@ -38,9 +38,9 @@ const staff_mid =(req, res, next) => {
 const isAuthorized = (req, res, next) => {
     const token = req.cookies.jwt_admin 
     const token2 = req.cookies.jwt_staff
-    if(!token || !token2) {
-        res.status(400).json({"err": {"message": "access token is not valid"}})
-    }
+    // if(!token || !token2) {
+    //     res.status(400).json({"err": {"message": "authentication required"}})
+    // }
     let isAdmin = false
     let isStaff = false
     if(token) {
@@ -65,7 +65,9 @@ const isAuthorized = (req, res, next) => {
 
     if(isAdmin || isStaff) {
         next()
-    } 
+    } else {
+        res.status(400).json({"err": {"message": "authentication required"}})
+    }
 }
 
 

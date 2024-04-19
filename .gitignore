@@ -3,4 +3,4 @@ node_modules
 .env
 prisma/migrations
 .vercel
-
+.env.development.local
