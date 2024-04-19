@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import "dotenv/config"
 
 const admin_mid =(req, res, next) => {
-    const token = req.cookies.jwt_admin || req.headers['access-token'];
+    const token = req.cookies.jwt_admin 
     console.log(token)
     if(token) {
         jwt.verify(token, process.env.JWT_SECRET, (err) => {
@@ -20,7 +20,7 @@ const admin_mid =(req, res, next) => {
 
 //
 const staff_mid =(req, res, next) => {
-    const token = req.cookies.jwt_staff || req.headers['access-token'];
+    const token = req.cookies.jwt_staff 
     if(token) {
         jwt.verify(token, process.env.JWT_SECRET, (err) => {
             if(err) {
@@ -36,8 +36,8 @@ const staff_mid =(req, res, next) => {
 
 
 const isAuthorized = (req, res, next) => {
-    const token = req.cookies.jwt_admin || req.headers['access-token']
-    const token2 = req.cookies.jwt_staff || req.headers['access-token']
+    const token = req.cookies.jwt_admin 
+    const token2 = req.cookies.jwt_staff
     if(!token || !token2) {
         res.status(400).json({"err": {"message": "access token is not valid"}})
     }
@@ -65,9 +65,7 @@ const isAuthorized = (req, res, next) => {
 
     if(isAdmin || isStaff) {
         next()
-    } else{
-        res.status(400).json({"err": {"message": "authentication required"}})
-    }
+    } 
 }
 
 
