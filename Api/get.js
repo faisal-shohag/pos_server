@@ -1,5 +1,6 @@
 import prisma from "../db/db.config.js";
 import { Router } from "express";
+import jwt from 'jsonwebtoken';
 const router = Router();
 
 
@@ -82,6 +83,43 @@ router.get("/categories", async (req, res) => {
       console.log(err);
     }
   });
+
+
+  
+// admin info
+router.get("/admin_info", (req, res) => {
+  const token = req.cookies.jwt
+  if(token) {
+      jwt.verify(token, process.env.JWT_SECRET, async(err, decodedToken) => {
+          if(err) {
+              res.status(400).json({"err": "Logged out"})
+          } else {
+              const admin = await prisma.admin.findUnique({
+                  where: {id: decodedToken.id}
+              })
+              res.status(200).json(admin)
+          }
+      } )
+  }
+})
+
+//staff info 
+router.get("/staff_info", (req, res) => {
+  const token = req.cookies.jwt
+  if(token) {
+      jwt.verify(token, process.env.JWT_SECRET, async(err, decodedToken) => {
+          if(err) {
+              res.status(400).json({"err": "Logged out"})
+          } else {
+              const staff = await prisma.staff.findUnique({
+                  where: {email: decodedToken.id}
+              })
+              res.status(200).json(staff)
+          }
+      } )
+  }
+})
+
 
 
 export default router;
