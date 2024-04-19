@@ -16,7 +16,7 @@ import authentication from './Authentication/Auth.js';
 import { isAuthorized } from './Middlewares/AuthenticationMiddleware.js';
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5000
 
 
 //*middlewares
@@ -51,3 +51,6 @@ app.listen(PORT, () => {
     const network = terminalLink('On your network:', `${ip.address()}:${PORT}`);
     console.log(`🚀 App is Running\n${localhost}\n${network}`)
 })
+
+
+export default app
