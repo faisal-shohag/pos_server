@@ -12,7 +12,7 @@ const admin_login = async (req, res) => {
     try {
         const admin = await find_admin(email, password)
         const token = createToken(admin.id)
-        res.cookie('jwt_admin', token, { httpOnly: true, maxAge: maxAge * 1000, domain:'vercel.app'})
+        res.cookie('jwt_admin', token, { httpOnly: true, maxAge: maxAge * 1000})
         res.status(200).json({...admin, token})
     } catch (error) {
         const errors = handleError(error)
@@ -23,7 +23,7 @@ const admin_login = async (req, res) => {
 //admin logout
 const admin_logout = async(req, res) => {
     try{
-        res.cookie('jwt_admin', '', {httpOnly: true, maxAge: 1, domain:'vercel.app'})
+        res.cookie('jwt_admin', '', {httpOnly: true, maxAge: 1})
         res.status(200).json({"message": "logged out!"})
     } catch(error) {
         const errors = handleError(error)
